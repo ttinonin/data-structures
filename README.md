@@ -7,7 +7,7 @@
 - [x] Cadastrar novo paciente
 - [x] Consultar paciente cadastrado
 - [x] Mostrar lista completa
-- [ ] Atualizar dados do paciente
+- [x] Atualizar dados do paciente
 - [x] Remover paciente
 
 ### Atendimento

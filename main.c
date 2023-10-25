@@ -7,6 +7,7 @@
 void cadastrar(Lista *lista) {
 	int resposta;
 
+	char rg_atualiza[13];
 	char rg_remove[13];
 	char rg_busca[13];
 
@@ -14,6 +15,12 @@ void cadastrar(Lista *lista) {
 	char rg[12];
 	int idade;
 	int dia, mes, ano;
+
+	char rg_novo[13];
+	char nome_novo[13];
+	int idade_novo;
+	Data *data_nova;
+	int dia_novo, mes_novo, ano_novo;
 
 	Data* data;
 	Registro* registro;
@@ -58,17 +65,17 @@ void cadastrar(Lista *lista) {
 		case 2:
 			printf("\nDigite o RG do paciente: ");
 			scanf("%s", rg_busca);
-			
+
 			busca = busca_lista(lista, rg_busca);
 
 			if(busca != NULL) {
 				printf("\n=======================");
 				printf("\n= PACIENTE ENCONTRADO =");
 				printf("\n=======================");
-				printf("\nNome: %s", busca->dados->nome);	
-				printf("\nRG: %s", busca->dados->rg);	
-				printf("\nIdade: %d", busca->dados->idade);	
-				printf("\nData: %d/%d/%d", busca->dados->data->dia, busca->dados->data->mes, busca->dados->data->ano);	
+				printf("\nNome: %s", busca->dados->nome);
+				printf("\nRG: %s", busca->dados->rg);
+				printf("\nIdade: %d", busca->dados->idade);
+				printf("\nData: %d/%d/%d", busca->dados->data->dia, busca->dados->data->mes, busca->dados->data->ano);
 				printf("\n");
 			}
 
@@ -79,6 +86,36 @@ void cadastrar(Lista *lista) {
 			printf("\n======================");
 			imprime_lista(lista);
 			break;
+        case 4:
+            printf("\n======================");
+            printf("\n= ATUALIZAR PACIENTE =");
+            printf("\n======================");
+
+            printf("\nRG do paciente a ser atualizado: ");
+            scanf("%s", rg_atualiza);
+
+            if(busca_lista(lista, rg_atualiza) == NULL) {
+                printf("\nRG nao encontrado\n");
+                break;
+            }
+
+            printf("\nNome (novo): ");
+			scanf("%s", nome_novo);
+
+			printf("\nRG (novo): ");
+			scanf("%s", rg_novo);
+
+			printf("\nIdade (novo): ");
+			scanf("%d", &idade_novo);
+
+			printf("\nData atual (dia/mes/ano): ");
+			scanf("%d/%d/%d", &dia_novo, &mes_novo, &ano_novo);
+
+			data_nova = cria_data(dia_novo, mes_novo, ano_novo);
+
+            atualiza_registro(lista, rg_atualiza, rg_novo, nome_novo, idade_novo, data_nova);
+
+            break;
 		case 5:
 			printf("\nDigite o RG do paciente: ");
 			scanf("%s", rg_remove);
@@ -113,7 +150,7 @@ void sobre() {
 }
 
 void atendimento(Lista *lista) {
-	
+
 }
 
 int main() {

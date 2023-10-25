@@ -6,7 +6,7 @@
 
 typedef struct ELista {
 	Registro *dados;
-	ELista *proximo;
+	struct ELista *proximo;
 } ELista;
 
 typedef struct Lista {
@@ -28,11 +28,11 @@ Registro *cria_registro(Data *data, char nome[244], char rg[12], int idade) {
 	Registro *registro = (Registro*)malloc(sizeof(Registro));
 
 	registro->data = data;
-	
+
 	strcpy(registro->nome, nome);
 
 	registro->idade = idade;
-	
+
 	strcpy(registro->rg, rg);
 
 	return registro;
@@ -41,7 +41,7 @@ Registro *cria_registro(Data *data, char nome[244], char rg[12], int idade) {
 ELista *cria_node(Registro *registro) {
 	ELista *node = (ELista*)malloc(sizeof(ELista));
 
-	node->proximo = NULL;	
+	node->proximo = NULL;
 	node->dados = registro;
 
 	return node;
@@ -80,12 +80,29 @@ ELista *busca_lista(Lista *lista, char rg[13]) {
 		printf("\nNao existem pacientes cadastrados!\n");
 		return NULL;
 	} else {
+	    // Daremos o loop enquanto não chegarmos ate o fim da LDE
+	    // e enquanto o RG fornecido foi diferente do registrado
 		while(node != NULL && strcmp(node->dados->rg, rg)) {
 			node = node->proximo;
 		}
 	}
 
 	return node;
+}
+
+void atualiza_registro(Lista *lista, char rg[13], char rg_novo[13], char nome[244], int idade, Data *data) {
+	ELista *node = lista->inicio;
+
+
+    while(node != NULL && strcmp(node->dados->rg, rg)) {
+        node = node->proximo;
+    }
+
+	strcpy(node->dados->nome, nome);
+	strcpy(node->dados->rg, rg_novo);
+
+	node->dados->idade = idade;
+	node->dados->data = data;
 }
 
 void remove_lista(Lista *lista, char rg[13]) {
