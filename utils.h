@@ -11,6 +11,6 @@ typedef struct Data {
 typedef struct Registro {
 	char nome[244];
 	int idade;
-	char rg[12];
+	char rg[13];
 	Data *data;
 } Registro;

@@ -7,6 +7,9 @@
 void cadastrar(Lista *lista) {
 	int resposta;
 
+	char rg_remove[13];
+	char rg_busca[13];
+
 	char nome[244];
 	char rg[12];
 	int idade;
@@ -15,14 +18,16 @@ void cadastrar(Lista *lista) {
 	Data* data;
 	Registro* registro;
 
-	do {
-		printf("1 - Cadastrar novo paciente");
-		printf("2 - Consultar paciente cadastrado");
-		printf("3 - Mostrar lista completa");
-		printf("4 - Atualizar dados de paciente");
-		printf("5 - Remover paciente");
-		printf("0 - Voltar");
+	ELista *busca;
 
+	do {
+		printf("\n1 - Cadastrar novo paciente");
+		printf("\n2 - Consultar paciente cadastrado");
+		printf("\n3 - Mostrar lista completa");
+		printf("\n4 - Atualizar dados de paciente");
+		printf("\n5 - Remover paciente");
+		printf("\n0 - Voltar");
+		printf("\nResposta: ");
 		scanf("%d", &resposta);
 
 		switch (resposta)
@@ -50,16 +55,61 @@ void cadastrar(Lista *lista) {
 			insere_lista(lista, registro);
 
 			break;
+		case 2:
+			printf("\nDigite o RG do paciente: ");
+			scanf("%s", rg_busca);
+			
+			busca = busca_lista(lista, rg_busca);
+
+			if(busca != NULL) {
+				printf("\n=======================");
+				printf("\n= PACIENTE ENCONTRADO =");
+				printf("\n=======================");
+				printf("\nNome: %s", busca->dados->nome);	
+				printf("\nRG: %s", busca->dados->rg);	
+				printf("\nIdade: %d", busca->dados->idade);	
+				printf("\nData: %d/%d/%d", busca->dados->data->dia, busca->dados->data->mes, busca->dados->data->ano);	
+				printf("\n");
+			}
+
+			break;
 		case 3:
 			printf("\n======================");
 			printf("\n= LISTA DE PACIENTES =");
 			printf("\n======================");
 			imprime_lista(lista);
 			break;
+		case 5:
+			printf("\nDigite o RG do paciente: ");
+			scanf("%s", rg_remove);
+
+			remove_lista(lista, rg_remove);
+			break;
 		default:
 			break;
 		}
 	} while(resposta != 0 );
+}
+
+void sobre() {
+	printf("\n===================");
+	printf("\n= DESENVOLVEDORES =");
+	printf("\n===================");
+
+	printf("\nNOME: THIAGO MONTEIRO TINONIN");
+	printf("\nRA: 22.122.044-5");
+	printf("\nCICLO: 4º (QUARTO)");
+	printf("\nCURSO: CIENCIA DA COMPUTACAO");
+	printf("\nDISCIPLINA: ESTRUTURA DE DADOS");
+	printf("\nDATA: 24/10/2023");
+
+	printf("\n");
+	printf("\nNOME: ANGELO GABRIEL VASCONCELOS BAPTISTA");
+	printf("\nRA: 22.122.081-7");
+	printf("\nCICLO: 4º (QUARTO)");
+	printf("\nCURSO: CIENCIA DA COMPUTACAO");
+	printf("\nDISCIPLINA: ESTRUTURA DE DADOS");
+	printf("\nDATA: 24/10/2023\n");
 }
 
 void atendimento(Lista *lista) {
@@ -72,12 +122,13 @@ int main() {
 	int resposta;
 
 	do {
-		printf("1 - Cadastrar");
-		printf("2 - Atendimento");
-		printf("3 - Pesquisa");
-		printf("4 - Carregar / Salvar");
-		printf("5 - Sobre");
-		printf("0 - Sair");
+		printf("\n1 - Cadastrar");
+		printf("\n2 - Atendimento");
+		printf("\n3 - Pesquisa");
+		printf("\n4 - Carregar / Salvar");
+		printf("\n5 - Sobre");
+		printf("\n0 - Sair");
+		printf("\nResposta: ");
 		scanf("%d", &resposta);
 
 		switch (resposta)
@@ -85,6 +136,8 @@ int main() {
 		case 1:
 			cadastrar(lista);
 			break;
+		case 5:
+			sobre();
 		default:
 			break;
 		}
