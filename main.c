@@ -4,6 +4,7 @@
 
 #include "lista.h"
 #include "fila.h"
+#include "arquivos.h"
 
 void cadastrar(Lista *lista) {
 	int resposta;
@@ -210,8 +211,52 @@ void atendimento(Lista *lista, Fila *fila) {
     } while(resposta != 0);
 }
 
-void carregar() {
+ELista *carregar() {
+    FILE *arq;
+    char nome[50];
+    char caminho_bin[55];
+    int len = 0;
 
+    strcpy(caminho_bin, "bin/");
+
+    printf("\nNome do arquivo a ser carregado: ");
+    scanf("%s", nome);
+
+    strcat(caminho_bin, nome);
+    strcat(caminho_bin, ".dat");
+
+    arq = fopen(caminho_bin, "rb");
+
+    if(arq == NULL) {
+        printf("\nArquivo nao encontrado!\n");
+        return;
+    }
+
+    ELista *no;
+    ELista *inicio = NULL;
+    Registro *dado;
+    while(1) {
+        dado = le_dado(arq);
+
+        printf("\nDado: %s", dado->nome);
+
+        if(feof(arq)) {
+            free(dado);
+            break;
+        }
+
+        no = (ELista*)malloc(sizeof(ELista));
+
+        no->dados = dado;
+        no->proximo = inicio;
+        inicio = no;
+        len++;
+    }
+
+    printf("\nTam: %d\n", len);
+    fclose(arq);
+
+    return inicio;
 }
 
 void salvar(Lista *lista) {
@@ -241,7 +286,7 @@ void salvar(Lista *lista) {
 
     ELista *node = lista->inicio;
     while(node != NULL) {
-        fwrite(&(node->dados), sizeof(Registro), 1, file_bin);
+        fwrite(node->dados, sizeof(Registro), 1, file_bin);
         node = node->proximo;
     }
 
@@ -318,7 +363,7 @@ int main() {
                     break;
                 }
 
-                carregar(lista);
+                lista->inicio = carregar();
             }
 
             break;

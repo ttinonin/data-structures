@@ -1,0 +1,14 @@
+
+=========================
+= PACIENTES CADASTRADOS =
+=========================
+
+Nome: Daniel
+RG: 1.1.1
+Idade: 1
+Data: 1/1/2001
+
+Nome: Nicolas
+RG: 2
+Idade: 2
+Data: 2/2/2007
