@@ -210,11 +210,70 @@ void atendimento(Lista *lista, Fila *fila) {
     } while(resposta != 0);
 }
 
+void carregar() {
+
+}
+
+void salvar(Lista *lista) {
+    FILE *file_bin, *file_output;
+    char arquivo[50];
+    char caminho_bin[55];
+    char caminho_txt[60];
+
+    strcpy(caminho_bin, "bin/");
+    strcpy(caminho_txt, "arquivos/");
+
+    printf("\nQual nome voce deseja salvar para o arquivo? (limite de 50 caracteres): ");
+    scanf("%s", arquivo);
+
+    strcat(caminho_bin, arquivo);
+    strcat(caminho_bin, ".dat");
+
+    strcat(caminho_txt, arquivo);
+    strcat(caminho_txt, ".txt");
+
+    file_bin = fopen(caminho_bin, "wb");
+
+    if(file_bin == NULL) {
+        printf("\nERRO AO ABRIR O ARQUIVO!\n");
+        return;
+    }
+
+    ELista *node = lista->inicio;
+    while(node != NULL) {
+        fwrite(&(node->dados), sizeof(Registro), 1, file_bin);
+        node = node->proximo;
+    }
+
+    fclose(file_bin);
+
+    file_output = fopen(caminho_txt, "w");
+
+    fprintf(file_output, "\n=========================");
+    fprintf(file_output, "\n= PACIENTES CADASTRADOS =");
+    fprintf(file_output, "\n=========================");
+    fprintf(file_output, "\n");
+
+    ELista *no = lista->inicio;
+    while(no != NULL) {
+        fprintf(file_output, "\nNome: %s", no->dados->nome);
+        fprintf(file_output, "\nRG: %s", no->dados->rg);
+        fprintf(file_output, "\nIdade: %d", no->dados->idade);
+        fprintf(file_output, "\nData: %d/%d/%d", no->dados->data->dia, no->dados->data->mes, no->dados->data->ano);
+        fprintf(file_output, "\n");
+
+        no = no->proximo;
+    }
+
+    fclose(file_output);
+}
+
 int main() {
 	Lista *lista = cria_lista();
 	Fila *fila = cria_fila();
 
-	int resposta;
+	int resposta, resposta_arquivo;
+	char confirmacao;
 
 	do {
 		printf("\n1 - Cadastrar");
@@ -234,8 +293,38 @@ int main() {
         case 2:
             atendimento(lista, fila);
             break;
+        case 3:
+            // TODO: Arvore de busca
+            break;
+        case 4:
+            printf("\n===========================");
+            printf("\n= GERENCIADOR DE ARQUIVOS =");
+            printf("\n===========================");
+
+            printf("\nDeseja salvar ou carregar um arquivo? [1/2] (Respectivamente): ");
+            scanf("%d", &resposta_arquivo);
+
+            if(resposta_arquivo == 1) {
+                salvar(lista);
+            } else {
+                printf("\nATENCAO: Ao carregar um arquivo de dados");
+                printf("\nATENCAO: Todos os dados nao salvos serao perdidos");
+                printf("\nATENCAO: Deseja continuar? [s/n]: ");
+                getchar();
+                scanf("%c", &confirmacao);
+
+                if(confirmacao == 'n') {
+                    printf("\nOperacao cancelada!\n");
+                    break;
+                }
+
+                carregar(lista);
+            }
+
+            break;
 		case 5:
 			sobre();
+			break;
 		default:
 			break;
 		}

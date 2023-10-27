@@ -26,7 +26,7 @@
 ### Carregar salvar
 
 - [ ] Ler um arquivo com os dados dos pacientes e carregar a lista
-- [ ] Salvar um arquivo com os dados dos pacientes
+- [x] Salvar um arquivo com os dados dos pacientes
 
 ### Sobre
 
