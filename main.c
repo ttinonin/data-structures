@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "lista.h"
+#include "fila.h"
 
 void cadastrar(Lista *lista) {
 	int resposta;
@@ -149,12 +150,69 @@ void sobre() {
 	printf("\nDATA: 24/10/2023\n");
 }
 
-void atendimento(Lista *lista) {
+void atendimento(Lista *lista, Fila *fila) {
+    int resposta;
 
+    char rg_enfilera[13];
+    ELista *busca_paciente;
+    Registro *removido;
+
+    do {
+        printf("\n=======================");
+        printf("\n= FILA DE ATENDIMENTO =");
+        printf("\n=======================");
+
+        printf("\n1 - Enfileirar paciente");
+        printf("\n2 - Desenfileirar paciente");
+        printf("\n3 - Mostrar fila");
+        printf("\n0 - Voltar");
+        printf("\nResposta: ");
+        scanf("%d", &resposta);
+
+        switch(resposta) {
+        case 1:
+            printf("\nRG do paciente a ser enfileirado: ");
+            scanf("%s", rg_enfilera);
+
+            busca_paciente = busca_lista(lista, rg_enfilera);
+
+            if(busca_paciente == NULL) {
+                break;
+            }
+
+            enqueue(fila, busca_paciente->dados);
+
+            break;
+        case 2:
+            removido = dequeue(fila);
+
+            if(removido != NULL) {
+                printf("\n===========================");
+                printf("\n= DADOS PACIENTE REMOVIDO =");
+                printf("\n===========================");
+
+                printf("\nNome: %s", removido->nome);
+                printf("\nRG: %s", removido->rg);
+                printf("\nIdade: %d", removido->idade);
+                printf("\nData: %d/%d/%d", removido->data->dia, removido->data->mes, removido->data->ano);
+            }
+
+            break;
+        case 3:
+            printf("\n==========================");
+            printf("\n= PACIENTES ENFILEIRADOS =");
+            printf("\n==========================");
+            imprime_fila(fila);
+            break;
+        default:
+            break;
+        }
+    } while(resposta != 0);
 }
 
 int main() {
 	Lista *lista = cria_lista();
+	Fila *fila = cria_fila();
 
 	int resposta;
 
@@ -173,6 +231,9 @@ int main() {
 		case 1:
 			cadastrar(lista);
 			break;
+        case 2:
+            atendimento(lista, fila);
+            break;
 		case 5:
 			sobre();
 		default:

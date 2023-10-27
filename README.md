@@ -12,9 +12,9 @@
 
 ### Atendimento
 
-- [ ] Enfileirar paciente
-- [ ] Desenfileirar paciente
-- [ ] Mostrar fila
+- [x] Enfileirar paciente
+- [x] Desenfileirar paciente
+- [x] Mostrar fila
 
 ### Pesquisa
 

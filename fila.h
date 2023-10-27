@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "utils.h"
-
 typedef struct EFila {
     Registro *dados;
-    EFila *proximo;
+    struct EFila *proximo;
 } EFila;
 
 typedef struct Fila {
@@ -15,9 +13,19 @@ typedef struct Fila {
     int qtde;
 } Fila;
 
+Fila *cria_fila() {
+    Fila *fila = (Fila*)malloc(sizeof(Fila));
+
+    fila->head = NULL;
+    fila->tail = NULL;
+    fila->qtde = 0;
+
+    return fila;
+}
+
 void enqueue(Fila *fila, Registro *registro) {
 	EFila *node = (EFila*)malloc(sizeof(EFila));
-	
+
 	node->dados = registro;
 	node->proximo = NULL;
 
@@ -26,15 +34,16 @@ void enqueue(Fila *fila, Registro *registro) {
 		fila->tail = node;
 	} else {
 		fila->tail->proximo = node;
+		fila->tail = node;
 	}
 
 	fila->qtde++;
 }
 
-EFila *dequeue(FIla *fila) {
+Registro *dequeue(Fila *fila) {
 	EFila *aux = fila->head;
 
-	EFila *registro;
+	Registro *registro;
 
 	fila->head = aux->proximo;
 	aux->proximo = NULL;
@@ -46,10 +55,11 @@ EFila *dequeue(FIla *fila) {
 		fila->tail = NULL;
 	}
 
+	fila->qtde--;
 	return registro;
 }
 
-void imprime_fila() {
+void imprime_fila(Fila *fila) {
 	int contador = 1;
 	EFila *node = fila->head;
 
@@ -59,11 +69,11 @@ void imprime_fila() {
 	}
 
 	while(node != NULL) {
-		printf("\nPosicao: %dº", contador);
-		printf("\nNome: %sº", node->dados->nome);
-		printf("\nRG: %sº", node->dados->rg);
+		printf("\nPosicao: %d", contador);
+		printf("\nNome: %s", node->dados->nome);
+		printf("\nRG: %s", node->dados->rg);
 		printf("\n");
-		
+
 		contador++;
 		node = node->proximo;
 	}
