@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Data {
+typedef struct{
 	int dia;
 	int mes;
 	int ano;
-} Data; 
+}Data;
 
 typedef struct Registro {
 	char nome[244];

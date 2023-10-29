@@ -5,8 +5,11 @@
 #include "lista.h"
 #include "fila.h"
 #include "arquivos.h"
+#include "arvore.h"
 
-void cadastrar(Lista *lista) {
+
+
+void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 	int resposta;
 
 	char rg_atualiza[13];
@@ -62,6 +65,11 @@ void cadastrar(Lista *lista) {
 			registro = cria_registro(data, nome, rg, idade);
 
 			insere_lista(lista, registro);
+
+			inserirPorAnoABB(apa, registro);
+			inserirPorAnoABB(apm, registro);
+			inserirPorAnoABB(apd, registro);
+			inserirPorAnoABB(api, registro);
 
 			break;
 		case 2:
@@ -211,7 +219,7 @@ void atendimento(Lista *lista, Fila *fila) {
     } while(resposta != 0);
 }
 
-ELista *carregar() {
+ELista *carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api) {
     FILE *arq;
     char nome[50];
     char caminho_bin[55];
@@ -232,24 +240,29 @@ ELista *carregar() {
         return;
     }
 
-    ELista *no;
+
+
     ELista *inicio = NULL;
     Registro *dado;
     while(1) {
         dado = le_dado(arq);
 
-        printf("\nDado: %s", dado->nome);
+        printf("\nDado: %s, %d, %s, %d, %d, %d", dado->nome, dado->idade, dado->rg, dado->data->ano, dado->data->mes, dado->data->dia);
 
         if(feof(arq)) {
             free(dado);
             break;
         }
 
-        no = (ELista*)malloc(sizeof(ELista));
+        ELista *no = cria_node(dado);
 
-        no->dados = dado;
+        //no->dados = dado;
         no->proximo = inicio;
         inicio = no;
+        inserirPorAnoABB(apa, dado);
+        inserirPorMesABB(apm, dado);
+        inserirPorDiaABB(apd, dado);
+        inserirPorIdadeABB(api, dado);
         len++;
     }
 
@@ -316,8 +329,12 @@ void salvar(Lista *lista) {
 int main() {
 	Lista *lista = cria_lista();
 	Fila *fila = cria_fila();
+    ABB *arvorePorAno = criaABB();
+    ABB *arvorePorMes = criaABB();
+    ABB *arvorePorDia = criaABB();
+    ABB *arvorePorIdade = criaABB();
 
-	int resposta, resposta_arquivo;
+	int resposta, resposta_arquivo, resposta2;
 	char confirmacao;
 
 	do {
@@ -333,13 +350,41 @@ int main() {
 		switch (resposta)
 		{
 		case 1:
-			cadastrar(lista);
+			cadastrar(lista, arvorePorAno, arvorePorMes, arvorePorDia, arvorePorIdade);
+
 			break;
         case 2:
             atendimento(lista, fila);
             break;
         case 3:
-            // TODO: Arvore de busca
+                printf("\n===========================");
+                printf("\n= PESQUISA =");
+                printf("\n===========================");
+
+                printf("\n1-Mostrar registros ordenados por ano de registro\n");
+                printf("\n2-Mostrar registros ordenados por mês de registro\n");
+                printf("\n3-Mostrar registros ordenados por dia de registro\n");
+                printf("\n4-Mostrar registros ordenados por idade do paciente\n");
+                scanf("%d", &resposta2);
+
+                switch(resposta2){
+                    case 1:
+                        in_ordem(arvorePorAno->raiz);
+                        break;
+                    case 2:
+                        in_ordem(arvorePorMes->raiz);
+                        break;
+                    case 3:
+                        in_ordem(arvorePorDia->raiz);
+                        break;
+                    case 4:
+                        in_ordem(arvorePorIdade->raiz);
+                        break;
+                    default:
+                        printf("Opção indisponível");
+                        break;
+                }
+
             break;
         case 4:
             printf("\n===========================");
@@ -363,7 +408,7 @@ int main() {
                     break;
                 }
 
-                lista->inicio = carregar();
+                lista->inicio = carregar(arvorePorAno, arvorePorMes, arvorePorDia, arvorePorIdade);
             }
 
             break;
@@ -374,4 +419,5 @@ int main() {
 			break;
 		}
 	} while(resposta != 0);
+
 }
