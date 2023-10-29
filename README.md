@@ -18,10 +18,10 @@
 
 ### Pesquisa
 
-- [ ] Mostrar registros ordenados por ano de registro
-- [ ] Mostrar registros ordenados por mes de registro
-- [ ] Mostrar registros ordenados por dia de registro
-- [ ] Mostrar registros ordenados por idade do paciente
+- [x] Mostrar registros ordenados por ano de registro
+- [x] Mostrar registros ordenados por mes de registro
+- [x] Mostrar registros ordenados por dia de registro
+- [x] Mostrar registros ordenados por idade do paciente
 
 ### Carregar salvar
 
