@@ -77,10 +77,9 @@ ELista *busca_lista(Lista *lista, char rg[13]) {
 	ELista *node = lista->inicio;
 
 	if(node == NULL) {
-		printf("\nNao existem pacientes cadastrados!\n");
 		return NULL;
 	} else {
-	    // Daremos o loop enquanto não chegarmos ate o fim da LDE
+	    // Daremos o loop enquanto nï¿½o chegarmos ate o fim da LDE
 	    // e enquanto o RG fornecido foi diferente do registrado
 		while(node != NULL && strcmp(node->dados->rg, rg)) {
 			node = node->proximo;

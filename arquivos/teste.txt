@@ -1,9 +1,0 @@
-
-=========================
-= PACIENTES CADASTRADOS =
-=========================
-
-Nome: aiaiai
-RG: 12
-Idade: 12
-Data: 12/12/12

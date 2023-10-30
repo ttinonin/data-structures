@@ -7,8 +7,6 @@
 #include "arquivos.h"
 #include "arvore.h"
 
-
-
 void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 	int resposta;
 
@@ -61,6 +59,11 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 			printf("\nData atual (dia/mes/ano): ");
 			scanf("%d/%d/%d", &dia, &mes, &ano);
 
+            if(busca_lista(lista, rg) != NULL) {
+                printf("\nPACIENTE COM RG JA CADASTRADO!\n");
+                break;
+            }
+
 			data = cria_data(dia, mes, ano);
 			registro = cria_registro(data, nome, rg, idade);
 
@@ -87,7 +90,9 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 				printf("\nIdade: %d", busca->dados->idade);
 				printf("\nData: %d/%d/%d", busca->dados->data->dia, busca->dados->data->mes, busca->dados->data->ano);
 				printf("\n");
-			}
+			} else {
+                printf("\nNao existem pacientes cadastrados!\n");
+            }
 
 			break;
 		case 3:
@@ -219,11 +224,10 @@ void atendimento(Lista *lista, Fila *fila) {
     } while(resposta != 0);
 }
 
-ELista *carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api) {
+void carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api, Lista *lista) {
     FILE *arq;
     char nome[50];
     char caminho_bin[55];
-    int len = 0;
 
     strcpy(caminho_bin, "bin/");
 
@@ -231,7 +235,7 @@ ELista *carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api) {
     scanf("%s", nome);
 
     strcat(caminho_bin, nome);
-    strcat(caminho_bin, ".dat");
+    strcat(caminho_bin, ".bin");
 
     arq = fopen(caminho_bin, "rb");
 
@@ -240,36 +244,42 @@ ELista *carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api) {
         return;
     }
 
+    ELista *node;
+    Registro *reg;
+    Data *data;
 
+    while(!feof(arq)) {
+        char nome_read[244];
+        char rg_read[13];
+        int idade_read;
+        int dia_read, mes_read, ano_read;
 
-    ELista *inicio = NULL;
-    Registro *dado;
-    while(1) {
-        dado = le_dado(arq);
+        fread(&nome_read, sizeof(char), 244, arq);
+        fread(&rg_read, sizeof(char), 13, arq);
+        fread(&idade_read, sizeof(int), 1, arq);
+        fread(&dia_read, sizeof(int), 1, arq);
+        fread(&mes_read, sizeof(int), 1, arq);
+        fread(&ano_read, sizeof(int), 1, arq);
 
-        printf("\nDado: %s, %d, %s, %d, %d, %d", dado->nome, dado->idade, dado->rg, dado->data->ano, dado->data->mes, dado->data->dia);
+        data = cria_data(dia_read, mes_read, ano_read);
 
-        if(feof(arq)) {
-            free(dado);
+        reg = cria_registro(data, nome_read, rg_read, idade_read);
+
+        if(busca_lista(lista, rg_read) != NULL) {
             break;
         }
 
-        ELista *no = cria_node(dado);
+        insere_lista(lista, reg);
 
-        //no->dados = dado;
-        no->proximo = inicio;
-        inicio = no;
-        inserirPorAnoABB(apa, dado);
-        inserirPorMesABB(apm, dado);
-        inserirPorDiaABB(apd, dado);
-        inserirPorIdadeABB(api, dado);
-        len++;
+        inserirPorAnoABB(apa, reg);
+        inserirPorMesABB(apm, reg);
+        inserirPorDiaABB(apd, reg);
+        inserirPorIdadeABB(api, reg);
     }
 
-    printf("\nTam: %d\n", len);
     fclose(arq);
 
-    return inicio;
+    return node;
 }
 
 void salvar(Lista *lista) {
@@ -285,7 +295,7 @@ void salvar(Lista *lista) {
     scanf("%s", arquivo);
 
     strcat(caminho_bin, arquivo);
-    strcat(caminho_bin, ".dat");
+    strcat(caminho_bin, ".bin");
 
     strcat(caminho_txt, arquivo);
     strcat(caminho_txt, ".txt");
@@ -298,8 +308,15 @@ void salvar(Lista *lista) {
     }
 
     ELista *node = lista->inicio;
+
     while(node != NULL) {
-        fwrite(node->dados, sizeof(Registro), 1, file_bin);
+        fwrite(&(node->dados->nome), sizeof(char), 244, file_bin);
+        fwrite(&(node->dados->rg), sizeof(char), 13, file_bin);
+        fwrite(&(node->dados->idade), sizeof(int), 1, file_bin);
+        fwrite(&(node->dados->data->dia), sizeof(int), 1, file_bin);
+        fwrite(&(node->dados->data->mes), sizeof(int), 1, file_bin);
+        fwrite(&(node->dados->data->ano), sizeof(int), 1, file_bin);
+
         node = node->proximo;
     }
 
@@ -408,7 +425,7 @@ int main() {
                     break;
                 }
 
-                lista->inicio = carregar(arvorePorAno, arvorePorMes, arvorePorDia, arvorePorIdade);
+                carregar(arvorePorAno, arvorePorMes, arvorePorDia, arvorePorIdade, lista);
             }
 
             break;
