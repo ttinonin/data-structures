@@ -70,9 +70,9 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 			insere_lista(lista, registro);
 
 			inserirPorAnoABB(apa, registro);
-			inserirPorAnoABB(apm, registro);
-			inserirPorAnoABB(apd, registro);
-			inserirPorAnoABB(api, registro);
+			inserirPorMesABB(apm, registro);
+			inserirPorDiaABB(apd, registro);
+			inserirPorIdadeABB(api, registro);
 
 			break;
 		case 2:
