@@ -15,12 +15,12 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 	char rg_busca[13];
 
 	char nome[244];
-	char rg[12];
+	char rg[13];
 	int idade;
 	int dia, mes, ano;
 
 	char rg_novo[13];
-	char nome_novo[13];
+	char nome_novo[244];
 	int idade_novo;
 	Data *data_nova;
 	int dia_novo, mes_novo, ano_novo;
@@ -48,7 +48,7 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 			printf("\n===============================");
 
 			printf("\nNome: ");
-			scanf("%s", nome);
+			scanf(" %243[^\n]", nome);
 
 			printf("\nRG: ");
 			scanf("%s", rg);
@@ -115,7 +115,7 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
             }
 
             printf("\nNome (novo): ");
-			scanf("%s", nome_novo);
+			scanf(" %243[^\n]", nome_novo);
 
 			printf("\nRG (novo): ");
 			scanf("%s", rg_novo);
@@ -279,7 +279,6 @@ void carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api, Lista *lista) {
 
     fclose(arq);
 
-    return node;
 }
 
 void salvar(Lista *lista) {

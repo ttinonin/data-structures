@@ -4,6 +4,8 @@
 
 #include "utils.h"
 
+// Define structs escenciais para a lista
+// com seu elemento sendo ELista
 typedef struct ELista {
 	Registro *dados;
 	struct ELista *proximo;
@@ -15,6 +17,8 @@ typedef struct Lista {
 } Lista;
 
 Data *cria_data(int dia, int mes, int ano) {
+	// Alocamos dinamicamente uma data na memoria
+	// e a inicializamos
 	Data *data = (Data*)malloc(sizeof(Data));
 
 	data->dia = dia;
@@ -25,10 +29,14 @@ Data *cria_data(int dia, int mes, int ano) {
 }
 
 Registro *cria_registro(Data *data, char nome[244], char rg[12], int idade) {
+	// Alocamos dinamicamente um registro na memoria
+	// e o inicializamos
 	Registro *registro = (Registro*)malloc(sizeof(Registro));
 
 	registro->data = data;
 
+	// Para strings utilizaremos o strcpy
+	// evitando erros de ponteiros
 	strcpy(registro->nome, nome);
 
 	registro->idade = idade;
@@ -39,6 +47,8 @@ Registro *cria_registro(Data *data, char nome[244], char rg[12], int idade) {
 }
 
 ELista *cria_node(Registro *registro) {
+	// Alocamos um elemento da lista na memoria
+	// e o inicializamos
 	ELista *node = (ELista*)malloc(sizeof(ELista));
 
 	node->proximo = NULL;

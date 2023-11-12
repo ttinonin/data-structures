@@ -1,0 +1,54 @@
+
+=========================
+= PACIENTES CADASTRADOS =
+=========================
+
+Nome: Daniel Silva de Menezes
+RG: 48.520.989-5
+Idade: 23
+Data: 10/12/2022
+
+Nome: Pedro Henrique Silva
+RG: 13.648.053-6
+Idade: 32
+Data: 10/10/2010
+
+Nome: Helena Silva Medeiros
+RG: 45.764.159-9
+Idade: 42
+Data: 10/10/2015
+
+Nome: Nicolas Andrade Ferreira
+RG: 41.668.612-6
+Idade: 19
+Data: 9/12/2022
+
+Nome: Luan Martins Botelho
+RG: 33.635.386-8
+Idade: 33
+Data: 18/8/2018
+
+Nome: Tiago Esposito Silva
+RG: 47.111.625-7
+Idade: 23
+Data: 10/2/2020
+
+Nome: Fabio Monteiro Baptista
+RG: 24.928.428-5
+Idade: 21
+Data: 21/10/2023
+
+Nome: Anderson Abner
+RG: 14.562.012-8
+Idade: 34
+Data: 10/5/2021
+
+Nome: Igor de Andrade
+RG: 43.427.083-0
+Idade: 40
+Data: 11/7/2023
+
+Nome: Luis Eduardo Silva
+RG: 11.076.656-8
+Idade: 36
+Data: 3/1/2023
