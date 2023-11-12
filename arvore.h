@@ -586,13 +586,13 @@ int *removerPorIdade(ABB *arvore, EABB *vertice) {
         }
         else{
           if (vertice->pai->dados->idade >= vertice->dados->idade) {
-            printf("esq esq");
+
             vertice->pai->filhoEsq = vertice->filhoEsq;
             vertice->filhoEsq->pai = vertice->pai;
 
 
           }else {
-            printf("dir esq");
+
             vertice->pai->filhoDir = vertice->filhoEsq;
             vertice->filhoEsq->pai = vertice->pai;
 
@@ -611,13 +611,13 @@ int *removerPorIdade(ABB *arvore, EABB *vertice) {
         }
         else{
           if (vertice->pai->dados->idade >= vertice->dados->idade) {
-            printf("esq dir");
+
             vertice->pai->filhoEsq = vertice->filhoDir;
             vertice->filhoDir->pai = vertice->pai;
 
 
           }else {
-            printf("dir dir");
+
             vertice->pai->filhoDir = vertice->filhoDir;
             vertice->filhoDir->pai = vertice->pai;
 
