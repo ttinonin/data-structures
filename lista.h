@@ -114,9 +114,10 @@ void atualiza_registro(Lista *lista, char rg[13], char rg_novo[13], char nome[24
 	node->dados->data = data;
 }
 
-void remove_lista(Lista *lista, char rg[13]) {
+Registro *remove_lista(Lista *lista, char rg[13]) {
 	ELista *atual = lista->inicio;
 	ELista *lixo = NULL;
+	Registro *d = NULL;
 
 	while(atual != NULL) {
 		if(strcmp(atual->dados->rg, rg) == 0) {
@@ -125,19 +126,20 @@ void remove_lista(Lista *lista, char rg[13]) {
 			} else {
 				lixo->proximo = atual->proximo;
 			}
-
+            d = atual->dados;
 			free(atual);
 			lista->qtde--;
 
 			printf("\nPaciente removido da lista!\n");
 
-			return;
+			return d;
 		}
 		lixo = atual;
 		atual = atual->proximo;
 	}
 
 	printf("\nPaciente nao encontrado!\n");
+	return NULL;
 }
 
 void imprime_lista(Lista *lista) {

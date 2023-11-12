@@ -9,6 +9,12 @@
 
 void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 	int resposta;
+	//EABB's e Registro utilizados na remoção dos elementos das arvores
+	Registro *d;
+    EABB *elementoAno;
+    EABB *elementoMes;
+    EABB *elementoDia;
+    EABB *elementoIdade;
 
 	char rg_atualiza[13];
 	char rg_remove[13];
@@ -69,6 +75,7 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 
 			insere_lista(lista, registro);
 
+            //insercao dos pacientes nas arvores
 			inserirPorAnoABB(apa, registro);
 			inserirPorMesABB(apm, registro);
 			inserirPorDiaABB(apd, registro);
@@ -132,10 +139,25 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 
             break;
 		case 5:
+
 			printf("\nDigite o RG do paciente: ");
 			scanf("%s", rg_remove);
 
-			remove_lista(lista, rg_remove);
+            //a funcao remove_lista retorna um registro que é utilizado na remoção
+            //dos pacientes nas arvores
+            d = remove_lista(lista, rg_remove);
+            if(d != NULL){
+
+                elementoAno = buscarValorPorAno(apa, d);
+                elementoMes = buscarValorPorMes(apm, d);
+                elementoDia = buscarValorPorDia(apd, d);
+                elementoIdade = buscarValorPorIdade(api, d);
+                removerPorAno(apa, elementoAno);
+                removerPorMes(apm, elementoMes);
+                removerPorDia(apd, elementoDia);
+                removerPorIdade(api, elementoIdade);
+
+            }
 			break;
 		default:
 			break;
@@ -271,6 +293,7 @@ void carregar(ABB *apa, ABB *apm, ABB *apd, ABB *api, Lista *lista) {
 
         insere_lista(lista, reg);
 
+        //insercao dos registros que estavam gravados nos arquivos nas arvores
         inserirPorAnoABB(apa, reg);
         inserirPorMesABB(apm, reg);
         inserirPorDiaABB(apd, reg);
@@ -345,6 +368,7 @@ void salvar(Lista *lista) {
 int main() {
 	Lista *lista = cria_lista();
 	Fila *fila = cria_fila();
+	//declaração de uma arvore para cada ordem especifica
     ABB *arvorePorAno = criaABB();
     ABB *arvorePorMes = criaABB();
     ABB *arvorePorDia = criaABB();
@@ -382,18 +406,25 @@ int main() {
                 printf("\n3-Mostrar registros ordenados por dia de registro\n");
                 printf("\n4-Mostrar registros ordenados por idade do paciente\n");
                 scanf("%d", &resposta2);
+                printf("\n");
 
                 switch(resposta2){
+                    //exibição das arvores com suas respectivas ordens
                     case 1:
+                        printf("Registros ordenados por ano:\n\n");
                         in_ordem(arvorePorAno->raiz);
                         break;
                     case 2:
+                        printf("Registros ordenados por mes:\n\n");
                         in_ordem(arvorePorMes->raiz);
                         break;
                     case 3:
+                        printf("Registros ordenados por dia:\n\n");
                         in_ordem(arvorePorDia->raiz);
+
                         break;
                     case 4:
+                        printf("Registros ordenados por idade:\n\n");
                         in_ordem(arvorePorIdade->raiz);
                         break;
                     default:
