@@ -120,6 +120,20 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
                 printf("\nRG nao encontrado\n");
                 break;
             }
+            d = busca_lista(lista, rg_atualiza)->dados;
+
+            if(d != NULL){
+
+                elementoAno = buscarValorPorAno(apa, d);
+                elementoMes = buscarValorPorMes(apm, d);
+                elementoDia = buscarValorPorDia(apd, d);
+                elementoIdade = buscarValorPorIdade(api, d);
+                removerPorAno(apa, elementoAno);
+                removerPorMes(apm, elementoMes);
+                removerPorDia(apd, elementoDia);
+                removerPorIdade(api, elementoIdade);
+
+            }
 
             printf("\nNome (novo): ");
 			scanf(" %243[^\n]", nome_novo);
@@ -134,6 +148,11 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 			scanf("%d/%d/%d", &dia_novo, &mes_novo, &ano_novo);
 
 			data_nova = cria_data(dia_novo, mes_novo, ano_novo);
+			d = cria_registro(data_nova, nome_novo, rg_novo, idade_novo);
+			inserirPorAnoABB(apa, d);
+			inserirPorMesABB(apm, d);
+			inserirPorDiaABB(apd, d);
+			inserirPorIdadeABB(api, d);
 
             atualiza_registro(lista, rg_atualiza, rg_novo, nome_novo, idade_novo, data_nova);
 
