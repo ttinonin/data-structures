@@ -4,7 +4,6 @@
 
 #include "lista.h"
 #include "fila.h"
-#include "arquivos.h"
 #include "arvore.h"
 
 void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
@@ -64,6 +63,11 @@ void cadastrar(Lista *lista, ABB *apa, ABB *apm, ABB *apd, ABB *api) {
 
 			printf("\nData atual (dia/mes/ano): ");
 			scanf("%d/%d/%d", &dia, &mes, &ano);
+
+			if(dia > 31 || dia < 1 || mes > 12 || mes < 1 || ano < 1900) {
+                printf("\nDATA INVALIDA!\n");
+                break;
+			}
 
             if(busca_lista(lista, rg) != NULL) {
                 printf("\nPACIENTE COM RG JA CADASTRADO!\n");

@@ -58,6 +58,8 @@ ELista *cria_node(Registro *registro) {
 }
 
 Lista *cria_lista() {
+    // Alocamos uma lista na memoria
+	// e a inicializamos
 	Lista* lista = (Lista*)malloc(sizeof(Lista));
 	lista->inicio = NULL;
 	lista->qtde = 0;
@@ -69,8 +71,11 @@ void insere_lista(Lista *lista, Registro *registro) {
 	ELista *node = cria_node(registro);
 
 	if(lista->inicio == NULL) {
+        // caso a lista esteja vazia, este termo a adicionar vira o primeiro
 		lista->inicio = node;
 	} else {
+	    // caso contrario, itera a lista, ate encontrar seu final
+	    // e a proxima celula da ultima, se torna a inserida
 		ELista *atual = lista->inicio;
 
 		while(atual->proximo != NULL) {
@@ -120,18 +125,21 @@ Registro *remove_lista(Lista *lista, char rg[13]) {
 	Registro *d = NULL;
 
 	while(atual != NULL) {
+        // Itera a lista ate encontrar o paciente de RG especifico
 		if(strcmp(atual->dados->rg, rg) == 0) {
 			if(lixo == NULL) {
 				lista->inicio = atual->proximo;
 			} else {
 				lixo->proximo = atual->proximo;
 			}
+			// D é o paciente que foi deletado
             d = atual->dados;
 			free(atual);
 			lista->qtde--;
 
 			printf("\nPaciente removido da lista!\n");
 
+            // Retornamos o paciente deletado com sucesso
 			return d;
 		}
 		lixo = atual;
@@ -150,6 +158,7 @@ void imprime_lista(Lista *lista) {
 		return;
 	}
 
+	// Itera celula por celula da lista e a mostra para o usuraio
 	while(node != NULL) {
 		printf("\nNome: %s", node->dados->nome);
 		printf("\nRG: %s", node->dados->rg);

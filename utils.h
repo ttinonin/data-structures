@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Este arquivo define structs que serão uteis para todos os outros arquivos
+// Como a de data e a de Registro
 typedef struct{
 	int dia;
 	int mes;
