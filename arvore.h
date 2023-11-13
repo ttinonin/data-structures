@@ -41,12 +41,12 @@ ABB *criaABB(){
     return abb;
 }
 
-//Faz a inserção dos elementos baseado no ano de nascimento dos pacientes
+//Faz a inserï¿½ï¿½o dos elementos baseado no ano de nascimento dos pacientes
 void inserirPorAnoABB(ABB *arv, Registro *dados){
     //inicializa uma nova celula com os dados do paciente
     EABB *novo = criaEABB(dados);
     if(arv->raiz == NULL){
-        //se a raiz for null então o novo elemento passa a ser a raiz
+        //se a raiz for null entï¿½o o novo elemento passa a ser a raiz
         arv->raiz = novo;
 
     }
@@ -77,7 +77,7 @@ void inserirPorAnoABB(ABB *arv, Registro *dados){
     }
 }
 
-//Faz a inserção dos elementos baseado no mes de nascimento dos pacientes
+//Faz a inserï¿½ï¿½o dos elementos baseado no mes de nascimento dos pacientes
 void inserirPorMesABB(ABB *arv, Registro *dados){
     EABB *novo = criaEABB(dados);
     if(arv->raiz == NULL){
@@ -109,7 +109,7 @@ void inserirPorMesABB(ABB *arv, Registro *dados){
     }
 }
 
-//Faz a inserção dos elementos baseado no dia de nascimento dos pacientes
+//Faz a inserï¿½ï¿½o dos elementos baseado no dia de nascimento dos pacientes
 void inserirPorDiaABB(ABB *arv, Registro *dados){
     EABB *novo = criaEABB(dados);
     if(arv->raiz == NULL){
@@ -141,7 +141,7 @@ void inserirPorDiaABB(ABB *arv, Registro *dados){
     }
 }
 
-//Faz a inserção dos elementos baseado na idade dos pacientes
+//Faz a inserï¿½ï¿½o dos elementos baseado na idade dos pacientes
 void inserirPorIdadeABB(ABB *arv, Registro *dados){
 
     EABB *novo = criaEABB(dados);
@@ -174,16 +174,16 @@ void inserirPorIdadeABB(ABB *arv, Registro *dados){
     }
 }
 
-//=========================FUNÇÕES DE REMOÇÃO DAS ARVORES==============================================
+//=========================FUNï¿½ï¿½ES DE REMOï¿½ï¿½O DAS ARVORES==============================================
 
-int *removerPorAno(ABB *arvore, EABB *vertice) {
-  //cria um registro auxiliar para fazer as comparações dos elementos
+int removerPorAno(ABB *arvore, EABB *vertice) {
+  //cria um registro auxiliar para fazer as comparaï¿½ï¿½es dos elementos
   Registro *v = vertice->dados;
   int ano = v->data->ano;
 
-  //verifica se o elemento é folha
+  //verifica se o elemento ï¿½ folha
   if (vertice->filhoDir == NULL && vertice->filhoEsq == NULL) {
-    //verifica se é raiz
+    //verifica se ï¿½ raiz
     if(vertice->pai == NULL){
       arvore->raiz = NULL;
     }
@@ -206,7 +206,7 @@ int *removerPorAno(ABB *arvore, EABB *vertice) {
     if (vertice->filhoEsq != NULL && vertice->filhoDir != NULL) {
         //cria uma variavel auxiliar que recebe o filho da direita
       EABB *aux = vertice->filhoDir;
-      //caso o filho esquerdo seja null, é conectado o filho direito do aux direto no vertice
+      //caso o filho esquerdo seja null, ï¿½ conectado o filho direito do aux direto no vertice
       if(aux->filhoEsq == NULL){
             //troca de dados
         vertice->dados = aux->dados;
@@ -295,7 +295,7 @@ int *removerPorAno(ABB *arvore, EABB *vertice) {
   return -1;
 }
 
-int *removerPorMes(ABB *arvore, EABB *vertice) {
+int removerPorMes(ABB *arvore, EABB *vertice) {
   Registro *v = vertice->dados;
   int mes = v->data->mes;
   if (vertice->filhoDir == NULL && vertice->filhoEsq == NULL) {
@@ -402,7 +402,7 @@ int *removerPorMes(ABB *arvore, EABB *vertice) {
   return -1;
 }
 
-int *removerPorDia(ABB *arvore, EABB *vertice) {
+int removerPorDia(ABB *arvore, EABB *vertice) {
   Registro *v = vertice->dados;
   int dia = v->data->dia;
 
@@ -524,7 +524,7 @@ int *removerPorDia(ABB *arvore, EABB *vertice) {
   return -1;
 }
 
-int *removerPorIdade(ABB *arvore, EABB *vertice) {
+int removerPorIdade(ABB *arvore, EABB *vertice) {
   Registro *v = vertice->dados;
   int idade = v->idade;
   if (vertice->filhoDir == NULL && vertice->filhoEsq == NULL) {
@@ -648,7 +648,7 @@ EABB *buscarValorPorAno(ABB *arvore, Registro *dados) {
         atual = atual->filhoDir;
       } else {
         if(strcmp(atual->dados->rg, dados->rg) == 0){
-            //caso o rg dos dados seja igual ao rg do EABB, o EABB é retornado
+            //caso o rg dos dados seja igual ao rg do EABB, o EABB ï¿½ retornado
             return atual;
         }
         else{
@@ -731,14 +731,14 @@ EABB *buscarValorPorIdade(ABB *arvore, Registro *dados) {
 void in_ordem(EABB *raiz) {
 
   if (raiz != NULL) {
-        //percorre todos os elementos a esqueda, até receber null
+        //percorre todos os elementos a esqueda, atï¿½ receber null
     in_ordem(raiz->filhoEsq);
     printf("Nome: %s\n", raiz->dados->nome);
     printf("RG: %s\n", raiz->dados->rg);
     printf("Idade: %d\n", raiz->dados->idade);
     printf("Data: %02d/%02d/%04d\n", raiz->dados->data->dia, raiz->dados->data->mes, raiz->dados->data->ano);
     printf("\n");
-    //vai pegando os elementos da direita dos que estão a esquerda
+    //vai pegando os elementos da direita dos que estï¿½o a esquerda
     in_ordem(raiz->filhoDir);
   }
 }

@@ -51,7 +51,7 @@ Registro *dequeue(Fila *fila) {
 
 	if(aux == NULL) {
         printf("\nFila vazia!\n");
-        return;
+        return NULL;
 	}
 
 	Registro *registro;
@@ -74,7 +74,7 @@ Registro *dequeue(Fila *fila) {
 }
 
 void imprime_fila(Fila *fila) {
-    // O contador indica a posição do paciente na fila
+    // O contador indica a posiï¿½ï¿½o do paciente na fila
 	int contador = 1;
 	EFila *node = fila->head;
 
@@ -83,7 +83,7 @@ void imprime_fila(Fila *fila) {
 		return;
 	}
 
-	// Iteramos a fila e a mostramos para o usuário
+	// Iteramos a fila e a mostramos para o usuï¿½rio
 	while(node != NULL) {
 		printf("\nPosicao: %d", contador);
 		printf("\nNome: %s", node->dados->nome);
